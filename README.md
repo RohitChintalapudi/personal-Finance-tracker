@@ -80,6 +80,7 @@ erDiagram
 ## 🛠️ Tech Stack & Technologies
 
 ### Frontend
+
 - **Framework:** React 19 + Vite 8
 - **Routing:** React Router Dom v7
 - **Styling:** Custom Vanilla CSS Design System with light/dark variables, glassmorphism card panels, and smooth CSS cubic-bezier transitions.
