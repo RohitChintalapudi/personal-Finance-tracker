@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, ArrowLeftRight, PieChart, Wallet, User,
-  TrendingUp, DollarSign, ChevronLeft, Sun, Moon
+  TrendingUp, DollarSign, ChevronLeft, Sun, Moon, LogOut
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import ConfirmDialog from './ConfirmDialog';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -17,13 +19,19 @@ const navItems = [
 const Layout = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
+  const [showLogout, setShowLogout] = useState(false);
 
   // Pages that should show back button instead of sidebar
   const isSubPage = ['/add-transaction', '/edit-transaction', '/currency-converter', '/stock-market', '/forgot-password'].some(
     p => location.pathname.startsWith(p)
   );
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
 
   return (
     <div className="app-layout">
@@ -35,9 +43,14 @@ const Layout = ({ children }) => {
           </div>
           <span>FinTrack Pro</span>
         </div>
-        <button className="mobile-theme-toggle" onClick={toggleTheme} title="Toggle Theme">
-          {isDark ? <Sun size={20} color="var(--warning)" /> : <Moon size={20} />}
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button className="mobile-theme-toggle" onClick={toggleTheme} title="Toggle Theme">
+            {isDark ? <Sun size={20} color="var(--warning)" /> : <Moon size={20} />}
+          </button>
+          <button className="mobile-logout-btn" onClick={() => setShowLogout(true)} title="Log Out">
+            <LogOut size={20} />
+          </button>
+        </div>
       </header>
 
       {/* Sidebar - Desktop */}
@@ -88,14 +101,19 @@ const Layout = ({ children }) => {
           </div>
 
           {user && (
-            <div className="sidebar-user" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
-              <div className="avatar avatar-sm">
-                {user.name?.charAt(0)?.toUpperCase() || 'U'}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+              <div className="sidebar-user" onClick={() => navigate('/profile')} style={{ cursor: 'pointer', flex: 1, minWidth: 0 }}>
+                <div className="avatar avatar-sm">
+                  {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                </div>
+                <div className="user-details">
+                  <span className="user-name">{user.name}</span>
+                  <span className="user-email">{user.email}</span>
+                </div>
               </div>
-              <div className="user-details">
-                <span className="user-name">{user.name}</span>
-                <span className="user-email">{user.email}</span>
-              </div>
+              <button className="logout-icon-btn" onClick={() => setShowLogout(true)} title="Log Out">
+                <LogOut size={18} />
+              </button>
             </div>
           )}
         </div>
@@ -127,6 +145,17 @@ const Layout = ({ children }) => {
           ))}
         </div>
       </nav>
+
+      {/* Global Log Out Dialog */}
+      <ConfirmDialog
+        open={showLogout}
+        title="Log Out"
+        message="Are you sure you want to log out of FinTrack Pro?"
+        confirmLabel="Log Out"
+        danger
+        onConfirm={handleLogout}
+        onCancel={() => setShowLogout(false)}
+      />
     </div>
   );
 };
