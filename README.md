@@ -1,10 +1,10 @@
-# 🚀 FinTrack Pro — Full-Stack Personal Finance Tracker
+# FinTrack Pro — Full-Stack Personal Finance Tracker
 
 FinTrack Pro is a premium, full-stack personal finance tracker designed to help users take control of their financial lives. Built using the MERN stack (MongoDB, Express, React, Node.js) with a custom design system, the app runs smoothly in web browsers (fully responsive) and provides advanced features like real-time simulated stock watchlists, dynamic cash-flow charts, budget trackers, and live currency conversions.
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 FinTrack Pro follows a classic client-server architecture with state management context layers to secure and cache data on the frontend.
 
@@ -39,7 +39,7 @@ graph TD
 
 ---
 
-## 📊 Entity Relationship (ER) Model
+## Entity Relationship (ER) Model
 
 The database schemas are highly structured, referencing users dynamically. Whenever an expense transaction is added, updated, or deleted, database triggers automatically aggregate and synchronize the `spent` status of category budgets.
 
@@ -77,7 +77,7 @@ erDiagram
 
 ---
 
-## 🛠️ Tech Stack & Technologies
+## Tech Stack & Technologies
 
 ### Frontend
 
@@ -96,7 +96,7 @@ erDiagram
 
 ---
 
-## 📁 Repository Directory Layout
+## Repository Directory Layout
 
 ```
 finance-tracker-web/
@@ -125,7 +125,7 @@ finance-tracker-web/
 
 ---
 
-## 📡 REST API Specifications
+## REST API Specifications
 
 All endpoints under `/api/transactions` and `/api/budgets` require a valid JWT header (`Authorization: Bearer <token>`).
 
@@ -145,7 +145,7 @@ All endpoints under `/api/transactions` and `/api/budgets` require a valid JWT h
 
 ---
 
-## ⚙️ Environment Configurations
+## Environment Configurations
 
 ### 1. Backend (`/backend/.env`)
 Create a file at `/backend/.env`:
@@ -165,7 +165,7 @@ VITE_EXCHANGE_RATE_API_KEY=your_optional_exchangerate_api_key
 
 ---
 
-## 🚀 Installation & Running Locally
+## Installation & Running Locally
 
 ### Step 1: Clone and install backend dependencies
 ```bash
@@ -197,7 +197,7 @@ npm install
 
 ---
 
-## 🛡️ Security Best Practices Included
+## Security Best Practices Included
 - **Credentials Encryption:** Passwords are encrypted in the MongoDB instance using `bcryptjs` hashing.
 - **Route Guarding:** Frontend pages are wrapped in a `<ProtectedRoute>` component that automatically redirects unauthenticated sessions to the Login page.
 - **Git Safety:** Both `.gitignore` files are pre-configured to keep local database configs, logs, keys, and `.env` credentials safely excluded from version control.
